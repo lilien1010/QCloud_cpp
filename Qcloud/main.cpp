@@ -54,8 +54,11 @@ int qc_app_sign(unsigned int appid, const char* secret_id, const char* secret_ke
     int rdm =   rand();  //322;//
     char plain_text[256] = {0};
     BYTE  bin[20] ={0};
-   
-    sprintf_s(plain_text,sizeof(plain_text),"a=%d&k=%s&e=%d&t=%d&r=%d&u=%s&f=",appid,secret_id,expired,nowt,rdm,userid);
+#ifdef WIN32
+    sprintf_s(plain_text,sizeof(plain_text),"a=%d&k=%s&e=%d&t=%d&r=%d&u=%s&f=",appid,secret_id,expired,nowt,rdm,userid); 
+#else  
+    snprintf(plain_text,sizeof(plain_text),"a=%d&k=%s&e=%d&t=%d&r=%d&u=%s&f=",appid,secret_id,expired,nowt,rdm,userid);
+#endif // WIN32
     int   pLen  =   strlen(plain_text);
     //cout<<plain_text<<endl;
 
